@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AYUNIZ - Your Ayurveda Companion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --green-1: #A8FF78;
+            --green-2: #78FFD6;
+            --green-3: #43E97B;
+            --green-4: #38F9D7;
+            --green-dark: #11998e;
+            --green-light: #e0ffe0;
+            --text-dark: #1B3C2E;
+            --text-light: #4F7C5A;
+            --off-white: #F8F6F2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            background: linear-gradient(270deg, var(--green-1), var(--green-2), var(--green-3), var(--green-4));
+            background-size: 800% 800%;
+            animation: gradientBG 18s ease infinite;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        @keyframes gradientBG {
+            0% {background-position:0% 50%;}
+            50% {background-position:100% 50%;}
+            100% {background-position:0% 50%;}
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--green-3), var(--green-4));
+            color: white;
+            box-shadow: 0 4px 12px rgba(67, 233, 123, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(90deg, var(--green-dark), var(--green-3));
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(67, 233, 123, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--green-dark);
+            border: 2px solid var(--green-3);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(67, 233, 123, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .btn-social {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: white;
+            color: var(--text-dark);
+            border: 1px solid #ddd;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-social:hover {
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .animated {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            background-color: transparent;
+        }
+
+        header.scrolled {
+            background-color: rgba(252, 248, 240, 0.95);
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark-green);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 32px;
+            margin-right: 8px;
+        }
+
+        .logo i {
+            margin-right: 8px;
+            color: var(--warm-amber);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--fresh-green);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--fresh-green);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--green-2) 0%, var(--green-1) 100%);
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            max-width: 650px;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--dark-green);
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--text-light);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .hero-motif {
+            position: absolute;
+            z-index: 1;
+            opacity: 0.3;
+        }
+
+        .motif-1 {
+            top: 20%;
+            right: 10%;
+            animation: float 8s ease-in-out infinite;
+            color: var(--green-3);
+            font-size: 40px;
+        }
+
+        .motif-2 {
+            bottom: 30%;
+            left: 5%;
+            animation: float 7s ease-in-out infinite 1s;
+            color: var(--green-4);
+            font-size: 36px;
+        }
+
+        .motif-3 {
+            top: 40%;
+            left: 20%;
+            animation: float 9s ease-in-out infinite 0.5s;
+            color: var(--green-2);
+            font-size: 32px;
+        }
+
+        /* Why Ayurveda Section */
+        .why-ayurveda {
+            background-color: var(--off-white);
+            text-align: center;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--warm-amber);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .benefit-card {
+            padding: 30px 20px;
+            border-radius: 15px;
+            background-color: var(--light-cream);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--fresh-green);
+        }
+
+        /* Features Section */
+        .features {
+            background: linear-gradient(to bottom, var(--green-light), var(--green-2));
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--off-white);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-content {
+            padding: 25px;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--warm-amber);
+            margin-bottom: 15px;
+        }
+
+        /* For Practitioners Section */
+        .practitioners {
+            background-color: var(--off-white);
+        }
+
+        .practitioners-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .benefits-list {
+            text-align: left;
+            margin: 30px 0;
+            list-style-type: none;
+        }
+
+        .benefits-list li {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .benefits-list li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--fresh-green);
+            font-weight: bold;
+        }
+
+        /* Business Model Section */
+        .business-model {
+            background: linear-gradient(to right, var(--green-3), var(--green-4));
+            color: var(--text-dark);
+            text-align: center;
+        }
+
+        .model-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .model-card {
+            background-color: rgba(248, 246, 242, 0.9);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .model-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Authentication Section */
+        .auth-section {
+            background: linear-gradient(135deg, rgba(161, 204, 143, 0.1) 0%, rgba(233, 179, 132, 0.1) 100%);
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .auth-container {
+            max-width: 450px;
+            margin: 0 auto;
+            background-color: var(--off-white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .auth-header {
+            padding: 30px;
+            background: linear-gradient(to right, var(--green-3), var(--green-4));
+            color: white;
+        }
+
+        .auth-header h3 {
+            color: #FFD700; /* Gold for highlight, or choose any attractive color */
+            letter-spacing: 1px;
+            text-shadow: 0 2px 8px rgba(67, 233, 123, 0.2);
+        }
+
+        .auth-header button {
+            background: linear-gradient(90deg, #43E97B, #38F9D7);
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            padding: 16px 40px;
+            box-shadow: 0 4px 16px rgba(67,233,123,0.18);
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: background 0.3s;
+        }
+
+        .auth-tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .auth-tab.active {
+            color: var(--fresh-green);
+            border-bottom: 3px solid var(--fresh-green);
+        }
+
+        .auth-form {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--fresh-green);
+            box-shadow: 0 0 0 3px rgba(161, 204, 143, 0.3);
+        }
+
+        .social-auth {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .social-auth button {
+            flex: 1;
+        }
+
+        .guest-option {
+            margin-top: 20px;
+            color: var(--text-light);
+        }
+
+        .guest-option a {
+            color: var(--fresh-green);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(to right, var(--green-4), var(--green-dark));
+            color: white;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+        }
+
+        .contact-info h3 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .contact-details {
+            list-style: none;
+        }
+
+        .contact-details li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-details i {
+            margin-right: 15px;
+            font-size: 1.2rem;
+            color: var(--warm-amber);
+        }
+
+        .contact-form .form-group {
+            margin-bottom: 25px;
+        }
+
+        .contact-form .btn {
+            background-color: var(--warm-amber);
+        }
+
+        .contact-form .btn:hover {
+            background-color: var(--fresh-green);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(to right, var(--green-dark), #145A32);
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .footer-motto {
+            font-style: italic;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .footer-links h4 {
+            color: white;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--warm-amber);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--warm-amber);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--warm-amber);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                flex-direction: column;
+                background-color: white;
+                width: 80%;
+                height: 100vh;
+                padding: 40px;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                transition: right 0.3s ease;
+            }
+            
+            .nav-menu.active {
+                right: 0;
+            }
+            
+            .hamburger {
+                display: block;
+                font-size: 1.5rem;
+                color: var(--dark-green);
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
+            .social-auth {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 60px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+            }
+            
+            .auth-container {
+                width: 90%;
+            }
+        }
+
+        /* Force uppercase for specific elements if needed */
+        .logo,
+        .footer-logo,
+        .auth-header button {
+            text-transform: uppercase;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.min.js"></script>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header id="header">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <img src="logo.png" alt="AYUNIZ Logo" style="height:32px; margin-right:8px;">
+                AYUNIZ
+            </a>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#why-ayurveda" class="nav-link">Why Ayurveda</a></li>
+                <li><a href="#features" class="nav-link">Features</a></li>
+                <li><a href="#practitioners" class="nav-link">For Practitioners</a></li>
+                <li><a href="#business-model" class="nav-link">Our Model</a></li>
+                <li><a href="#auth" class="nav-link">Login</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content animated">
+            <h1>Welcome to AyuNiz, where ancient Ayurvedic wisdom meets modern convenience.</h1>
+            <p>We bring the Mother of Healing to your fingertips, transforming your wellness journey with personalized care and trusted solutions.</p>
+            <div class="hero-buttons">
+                <a href="#auth" class="btn btn-primary">Begin Your Journey</a>
+                <a href="#why-ayurveda" class="btn btn-secondary">Learn More</a>
+            </div>
+        </div>
+        <!-- Animated motifs -->
+        <div class="hero-motif motif-1 floating">
+            <i class="fas fa-leaf"></i>
+        </div>
+        <div class="hero-motif motif-2 floating">
+            <i class="fas fa-seedling"></i>
+        </div>
+        <div class="hero-motif motif-3 floating">
+            <i class="fas fa-heart"></i>
+        </div>
+    </section>
+
+    <!-- Why Ayurveda Section -->
+    <section class="why-ayurveda" id="why-ayurveda">
+        <div class="container">
+            <h2 class="section-title animated">Why Choose Ayurveda?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card animated">
+                    <div class="benefit-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Prevention Focused</h3>
+                    <p>Emphasizes maintaining health through balance rather than just treating disease.</p>
+                </div>
+                <div class="benefit-card animated">
+                    <div class="benefit-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3>Personalized Care</h3>
+                    <p>Treatments tailored to your unique mind-body constitution (dosha).</p>
+                </div>
+                <div class="benefit-card animated">
+                    <div class="benefit-icon">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h3>Chronic Symptom Management</h3>
+                    <p>Effective approach for managing long-term health issues naturally.</p>
+                </div>
+                <div class="benefit-card animated">
+                    <div class="benefit-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Safe Choices</h3>
+                    <p>Natural therapies with minimal side effects when properly administered.</p>
+                </div>
+                <div class="benefit-card animated">
+                    <div class="benefit-icon">
+                        <i class="fas fa-stethoscope"></i>
+                    </div>
+                    <h3>Complements Modern Medicine</h3>
+                    <p>Integrates well with conventional treatments for holistic care.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title animated">What You'll Gain</h2>
+            <div class="features-grid">
+                <div class="feature-card animated">
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <i class="fas fa-book-medical"></i>
+                        </div>
+                        <h3>Learn with Confidence</h3>
+                        <p>Access doctor-reviewed guides and resources to expand your Ayurvedic knowledge safely.</p>
+                    </div>
+                </div>
+                <div class="feature-card animated">
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3>Consult Experts</h3>
+                        <p>1:1 video consultations with certified Ayurvedic practitioners for personalized guidance.</p>
+                    </div>
+                </div>
+                <div class="feature-card animated">
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <i class="fas fa-mortar-pestle"></i>
+                        </div>
+                        <h3>Buy Quality You Can Rely On</h3>
+                        <p>Lab-tested herbs and products sourced directly from trusted growers and producers.</p>
+                    </div>
+                </div>
+                <div class="feature-card animated">
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h3>Safe & Knowledgeable</h3>
+                        <p>Clear dosage instructions and interaction information for safe usage of Ayurvedic remedies.</p>
+                    </div>
+                </div>
+                <div class="feature-card animated">
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <h3>Smooth Experience</h3>
+                        <p>Multi-language support and fast, reliable delivery to your doorstep.</p>
+                    </div>
+                </div>
+                <div class="feature-card animated">
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <h3>More Value, Less Hassle</h3>
+                        <p>Subscription options and reward programs to make your wellness journey effortless.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- For Practitioners Section -->
+    <section class="practitioners" id="practitioners">
+        <div class="container">
+            <h2 class="section-title animated">Empowering Ayurvedic Doctors</h2>
+            <div class="practitioners-content animated">
+                <p>Join our platform to grow your practice, reach more patients, and enhance your professional impact.</p>
+                <ul class="benefits-list">
+                    <li>Expand your reach with online consultations</li>
+                    <li>Access digital tools designed for Ayurvedic practice management</li>
+                    <li>Build your reputation through verified patient reviews</li>
+                    <li>Increase your earnings with flexible scheduling options</li>
+                    <li>Privacy-first design to protect patient information</li>
+                </ul>
+                <a href="#auth" class="btn btn-primary">Join as Practitioner</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Model Section -->
+    <section class="business-model" id="business-model">
+        <div class="container">
+            <h2 class="section-title animated">Our Ethical Business Model</h2>
+            <div class="model-cards">
+                <div class="model-card animated">
+                    <h3>Transparent Sourcing</h3>
+                    <p>Farmer-first approach that ensures fair compensation and sustainable practices.</p>
+                </div>
+                <div class="model-card animated">
+                    <h3>Verified Practitioners</h3>
+                    <p>Rigorous verification process for all Ayurvedic experts on our platform.</p>
+                </div>
+                <div class="model-card animated">
+                    <h3>Certified Quality</h3>
+                    <p>All products undergo laboratory testing for purity and potency.</p>
+                </div>
+                <div class="model-card animated">
+                    <h3>Transparent Pricing</h3>
+                    <p>Clear, fair pricing with no hidden costs for consultations or products.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Authentication Section -->
+    <section class="auth-section" id="auth">
+        <div class="container">
+            <h2 class="section-title animated">Your Personalized Ayurveda Journey Starts Here</h2>
+            <div class="auth-container animated">
+                <div class="auth-header">
+                    <button style="
+        background: linear-gradient(90deg, #43E97B, #38F9D7);
+        color: #fff;
+        font-size: 1.3rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 30px;
+        padding: 16px 40px;
+        box-shadow: 0 4px 16px rgba(67,233,123,0.18);
+        letter-spacing: 1px;
+        cursor: pointer;
+        margin-bottom: 10px;
+        transition: background 0.3s;
+    ">
+        JOIN AYUNIZ TODAY
+    </button>
+                    <p>Discover your path to holistic wellness</p>
+                </div>
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login">Login</button>
+                    <button class="auth-tab" data-tab="signup">Sign Up</button>
+                </div>
+                <div class="auth-form">
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" placeholder="Your email address">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" class="form-control" placeholder="Your password">
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                    </form>
+                    
+                    <div class="social-auth">
+                        <button class="btn-social">
+                            <i class="fab fa-google"></i> Google
+                        </button>
+                        <button class="btn-social">
+                            <i class="fab fa-facebook-f"></i> Facebook
+                        </button>
+                    </div>
+                    
+                    <div class="guest-option">
+                        <p>Just exploring? <a href="#">Continue as Guest</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title animated">Get In Touch</h2>
+            <div class="contact-container">
+                <div class="contact-info animated">
+                    <h3>Our Team</h3>
+                    <ul class="contact-details" id="contact-details-list">
+                        <li><i class="fas fa-envelope"></i> ayuniz2025@gmail.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Adamas University</li>
+                        <!-- Phone number will be added here dynamically -->
+                    </ul>
+                </div>
+                <div class="contact-form animated">
+                    <form id="contact-form" action="https://formspree.io/f/myzprovk" method="POST">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-email">Your Email</label>
+                            <input type="email" id="contact-email" name="email" class="form-control" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Your Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="form-control" placeholder="Enter your phone number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" name="message" class="form-control" rows="4" placeholder="How can we help you?" required></textarea>
+                        </div>
+                        <input type="hidden" name="_subject" value="AyuNiz Contact Form Message">
+                        <button type="submit" class="btn btn-primary" style="width:100%; font-size:1.1rem; letter-spacing:1px; display:flex; align-items:center; justify-content:center; gap:10px;">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">AYUNIZ</div>
+                    <p class="footer-motto">Learn. Consult. Heal. Naturally.</p>
+                    <p>Bringing ancient Ayurvedic wisdom to the modern world with care and integrity.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#why-ayurveda">Why Ayurveda</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#practitioners">For Practitioners</a></li>
+                        <li><a href="#business-model">Our Model</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">Security</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 AYUNIZ. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="leaf-3d-1"></div>
+    <div id="leaf-3d-2"></div>
+    <div id="leaf-3d-3"></div>
+    <div id="leaf-3d-4"></div>
+    <div id="leaf-3d-5"></div>
+
+    <script>
+        // Scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.animated');
+            
+            // Function to check if element is in viewport
+            function checkIfInView() {
+                animatedElements.forEach(function(element) {
+                    const position = element.getBoundingClientRect();
+                    
+                    // If element is in viewport
+                    if(position.top < window.innerHeight && position.bottom >= 0) {
+                        element.classList.add('visible');
+                    }
+                });
+            }
+            
+            // Check on load and scroll
+            checkIfInView();
+            window.addEventListener('scroll', checkIfInView);
+            
+            // Header scroll effect
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', function() {
+                if(window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Mobile menu toggle
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('nav-menu');
+            
+            hamburger.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                hamburger.innerHTML = navMenu.classList.contains('active') ? 
+                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+            
+            // Close mobile menu when clicking on links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    navMenu.classList.remove('active');
+                    hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+            
+            // Auth tabs functionality
+            const authTabs = document.querySelectorAll('.auth-tab');
+            authTabs.forEach(function(tab) {
+                tab.addEventListener('click', function() {
+                    authTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // In a real implementation, this would switch between forms
+                    // For this demo, we'll just show an alert
+                    if(this.dataset.tab === 'signup') {
+                        alert('Sign up form would be shown here. For demonstration purposes only.');
+                    }
+                });
+            });
+            
+            // Form submission prevention for demo forms only (allow contact form to submit to Formspree)
+            const forms = document.querySelectorAll('form');
+            forms.forEach(function(form) {
+                if (form.id !== 'contact-form') {
+                    form.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        alert('Form submission functionality would be implemented in a live version.');
+                    });
+                }
+            });
+        });
+
+        // Helper function to create a floating leaf that moves randomly all over the page
+        function createFloatingLeaf(id, opts) {
+            const leafDiv = document.getElementById(id);
+            if (!leafDiv) return;
+
+            // Set size and style for the leaf container
+            leafDiv.style.position = 'fixed';
+            leafDiv.style.width = opts.size + 'px';
+            leafDiv.style.height = opts.size * 1.5 + 'px';
+            leafDiv.style.zIndex = '2';
+            leafDiv.style.pointerEvents = 'none';
+
+            // Three.js scene setup
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(45, opts.size/(opts.size*1.5), 0.1, 1000);
+            camera.position.z = 4;
+
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(opts.size, opts.size * 1.5);
+            renderer.setClearColor(0x000000, 0); // transparent background
+            leafDiv.appendChild(renderer.domElement);
+
+            // Create a leaf shape using LatheGeometry (stylized)
+            const points = [];
+            for (let i = 0; i < 20; i++) {
+                const t = i / 19;
+                const r = 0.6 * Math.sin(Math.PI * t) * (1 - 0.3 * t);
+                points.push(new THREE.Vector2(r, t * 2 - 1));
+            }
+            const leafGeometry = new THREE.LatheGeometry(points, 60);
+            const leafMaterial = new THREE.MeshPhongMaterial({
+                color: opts.color,
+                shininess: 100,
+                specular: 0xA8FF78,
+                emissive: 0x11998e,
+                emissiveIntensity: 0.2,
+                transparent: true,
+                opacity: 0.95
+            });
+            const leaf = new THREE.Mesh(leafGeometry, leafMaterial);
+            leaf.rotation.z = Math.PI / 2;
+            scene.add(leaf);
+
+            // Add a central vein (cylinder)
+            const veinGeometry = new THREE.CylinderGeometry(0.03, 0.03, 2, 16);
+            const veinMaterial = new THREE.MeshPhongMaterial({ color: 0x11998e });
+            const vein = new THREE.Mesh(veinGeometry, veinMaterial);
+            vein.rotation.z = Math.PI / 2;
+            scene.add(vein);
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            scene.add(ambientLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(2, 4, 5);
+            scene.add(directionalLight);
+
+            // Random movement parameters
+            let time = Math.random() * 100;
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            const ampX = Math.random() * (vw - opts.size) * 0.8 + 50;
+            const ampY = Math.random() * (vh - opts.size * 1.5) * 0.8 + 50;
+            const baseX = Math.random() * (vw - opts.size);
+            const baseY = Math.random() * (vh - opts.size * 1.5);
+
+            // Random rotation speed and direction for realistic flipping
+            const flipSpeed = Math.random() * 0.7 + 0.3;
+            const flipOffset = Math.random() * Math.PI * 2;
+            const flipDirection = Math.random() > 0.5 ? 1 : -1;
+
+            function animate() {
+                time += 0.005 + opts.speed; // slower movement
+
+                // Floating effect
+                leaf.position.y = Math.sin(time * opts.floatSpeed) * 0.3;
+                leaf.position.x = Math.cos(time * opts.floatSpeed * 0.8) * 0.2;
+
+                // Realistic leaf rotation (gentle sway and twist)
+                leaf.rotation.y = Math.sin(time * 0.7) * 0.25; // gentle side sway
+                leaf.rotation.x = Math.cos(time * 0.5) * 0.12; // gentle up/down
+                leaf.rotation.z = Math.sin(time * 0.4) * 0.18 + Math.PI / 2; // gentle twist
+
+                // Frontside to outside random flipping
+                leaf.rotation.x += Math.sin(time * flipSpeed + flipOffset) * 0.18 * flipDirection;
+                leaf.rotation.y += Math.cos(time * flipSpeed + flipOffset) * 0.18 * flipDirection;
+
+                vein.position.copy(leaf.position);
+                vein.rotation.y = leaf.rotation.y;
+                vein.rotation.x = leaf.rotation.x;
+                vein.rotation.z = leaf.rotation.z;
+
+                // Random movement all over the page
+                const x = baseX + Math.sin(time * opts.moveSpeed + opts.offset) * ampX;
+                const y = baseY + Math.cos(time * opts.moveSpeed + opts.offset) * ampY;
+                leafDiv.style.left = `${Math.max(0, Math.min(x, vw - opts.size))}px`;
+                leafDiv.style.top = `${Math.max(0, Math.min(y, vh - opts.size * 1.5))}px`;
+
+                renderer.render(scene, camera);
+                requestAnimationFrame(animate);
+            }
+            animate();
+
+            // Update movement bounds on resize
+            window.addEventListener('resize', () => {
+                const vwNew = window.innerWidth;
+                const vhNew = window.innerHeight;
+                leafDiv.style.left = `${Math.max(0, Math.min(baseX, vwNew - opts.size))}px`;
+                leafDiv.style.top = `${Math.max(0, Math.min(baseY, vhNew - opts.size * 1.5))}px`;
+            });
+        }
+
+        // Create multiple leaves with the same green color and random offsets, slower movement
+        document.addEventListener('DOMContentLoaded', function() {
+            const leafColor = 0x43E97B; // consistent green color for all leaves
+            createFloatingLeaf('leaf-3d-1', {
+                size: 100,
+                color: leafColor,
+                speed: 0.0015,
+                floatSpeed: 0.5,
+                moveSpeed: 0.2,
+                offset: Math.random() * Math.PI * 2
+            });
+            createFloatingLeaf('leaf-3d-2', {
+                size: 80,
+                color: leafColor,
+                speed: 0.0018,
+                floatSpeed: 0.6,
+                moveSpeed: 0.22,
+                offset: Math.random() * Math.PI * 2
+            });
+            createFloatingLeaf('leaf-3d-3', {
+                size: 70,
+                color: leafColor,
+                speed: 0.0016,
+                floatSpeed: 0.45,
+                moveSpeed: 0.18,
+                offset: Math.random() * Math.PI * 2
+            });
+            createFloatingLeaf('leaf-3d-4', {
+                size: 90,
+                color: leafColor,
+                speed: 0.0017,
+                floatSpeed: 0.55,
+                moveSpeed: 0.21,
+                offset: Math.random() * Math.PI * 2
+            });
+            createFloatingLeaf('leaf-3d-5', {
+                size: 60,
+                color: leafColor,
+                speed: 0.0019,
+                floatSpeed: 0.6,
+                moveSpeed: 0.23,
+                offset: Math.random() * Math.PI * 2
+            });
+        });
+
+        // Mouse click effect: burst of animated greenish circles at click position (all at one point, lighter green)
+        document.addEventListener('click', function(e) {
+            for (let i = 0; i < 8; i++) {
+                const circle = document.createElement('div');
+                const size = Math.random() * 16 + 10;
+                circle.style.position = 'fixed';
+                circle.style.left = (e.clientX - size / 2) + 'px';
+                circle.style.top = (e.clientY - size / 2) + 'px';
+                circle.style.width = size + 'px';
+                circle.style.height = size + 'px';
+                circle.style.borderRadius = '50%';
+                circle.style.background = `linear-gradient(90deg, #A8FF78, #43E97B)`; // greenish gradient
+                circle.style.opacity = '0.6';
+                circle.style.pointerEvents = 'none';
+                circle.style.zIndex = '9999';
+                circle.style.transition = 'transform 0.7s cubic-bezier(.17,.67,.83,.67), opacity 0.7s';
+                document.body.appendChild(circle);
+
+                setTimeout(() => {
+                    circle.style.transform = 'scale(1.6)';
+                    circle.style.opacity = '0';
+                }, 10);
+
+                setTimeout(() => {
+                    circle.remove();
+                }, 700);
+            }
+        });
+
+        // Show entered phone number in contact details after form submit
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contact-form');
+            contactForm.addEventListener('submit', function(e) {
+                // Only show phone if form is valid and submitted
+                const phoneInput = document.getElementById('phone');
+                const phoneValue = phoneInput.value.trim();
+                if (phoneValue) {
+                    const contactDetailsList = document.getElementById('contact-details-list');
+                    // Remove previous phone if exists
+                    const prevPhone = contactDetailsList.querySelector('.user-phone');
+                    if (prevPhone) prevPhone.remove();
+                    // Add new phone
+                    const phoneLi = document.createElement('li');
+                    phoneLi.className = 'user-phone';
+                    phoneLi.innerHTML = `<i class="fas fa-phone"></i> ${phoneValue}`;
+                    contactDetailsList.appendChild(phoneLi);
+                }
+            });
+        });
+    </script>
+<script id="messenger-widget-b" src="https://cdn.botpenguin.com/website-bot.js" defer></script>
+</body>
+</html>
